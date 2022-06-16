@@ -55,13 +55,14 @@ String? userId;
   if(firebaseAuth.currentUser!=null){
     // firebaseAuth.signOut();
     print("user id is ${firebaseAuth.currentUser!.uid}");
+      updateUserToken();
   final user= await getUser(firebaseAuth.currentUser!.uid);
   if(user==null)
   return;
 // print("getting user detail is ${user!.toFJson()}");
    MUser(user);
    
-   updateUserToken();
+ 
 //    if(user.tracar_id==null){
 //      print("user id from auth is ${firebaseAuth.currentUser!.uid}");
 //     //  user.email="Olu12467@gmail.com";
@@ -88,20 +89,10 @@ String? userId;
 
   void signinWithPhoneNumber(UserCredential Muser) async{
 
-userId=Muser.user!.uid;
-print("user id is $userId");
-UserModel? user=await getUser(userId!);
 
-if(user==null){
-UserModel users=UserModel(id:userId);
-
-userId=Muser.user!.uid;
-Get.to(UpdateProfile());
-}else{
-MUser(user);
    Get.off(Dashboard());
 
-}
+
   }
   // }
   //   Future<UserModel?> getUser(String id) async {
@@ -292,7 +283,8 @@ Future updateUserToken()async{
 final fcmToken = await FirebaseMessaging.instance.getToken();
 FirebaseFirestore.instance.collection("userToken").doc(FirebaseAuth.instance.currentUser!.uid).set({
 
-  "token":""
+  "token":fcmToken,
+  "phoneNumber":FirebaseAuth.instance.currentUser!.phoneNumber
 });
 
 

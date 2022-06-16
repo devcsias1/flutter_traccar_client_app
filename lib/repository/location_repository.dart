@@ -30,6 +30,7 @@ if (kDebugMode) {
   print("oninit for location repo");
 }
     LocationPermission permission = await Geolocator.checkPermission();
+  
     if(permission==LocationPermission.always || permission==LocationPermission.whileInUse){
 
 
@@ -107,14 +108,14 @@ updateBackgroundPosition(location, user!);
 Future updatePosition(Position position)async{
 
 if (kDebugMode) {
-  // print("trying to update position ${user.phone}");
+  print("trying to update position ${FirebaseAuth.instance.currentUser!.phoneNumber}} ${DateTime.now().toIso8601String()}");
 }
 Log item=Log(time:DateTime.now(),info: "Service Started");
 final allList=allLog;
 allList.add(item);
 try{
 
-final result=await http.post(Uri.parse("${AppLink.baseUrl}/?id=${FirebaseAuth.instance.currentUser!.phoneNumber}&lat=${position.latitude}&lon=${position.longitude}&time=${DateTime.now().toIso8601String()}&accuracy=${position.accuracy}&speed=${position.speed}&course=${position.heading}&altitude=${position.altitude}"));
+final result=await http.post(Uri.parse("${AppLink.baseUrl}?id=${FirebaseAuth.instance.currentUser!.phoneNumber!.replaceAll("+", "")}&lat=${position.latitude}&lon=${position.longitude}&time=${DateTime.now().toIso8601String()}&accuracy=${position.accuracy}&speed=${position.speed}&course=${position.heading}&altitude=${position.altitude}"));
 
 if (kDebugMode) {
   print("response is ${result.body} ${result.statusCode}");
@@ -233,7 +234,7 @@ BackgroundLocation.setAndroidConfiguration(1000);
  BackgroundLocation.startLocationService();
  Get.back();
               },
-              child: const Text('Procedd'),
+              child: const Text('Proceed'),
             ),
            
           ],

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -67,23 +68,7 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: const Text(
-                  "Name",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  "${_authController.MUser.value!.name}",
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
+            
               const SizedBox(
                 height: 10,
               ),
@@ -100,30 +85,14 @@ class _DashboardState extends State<Dashboard> {
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  "${_authController.MUser.value?.phone ?? ""}",
+                  "${FirebaseAuth.instance.currentUser!.phoneNumber ?? ""}",
                   style: const TextStyle(fontSize: 16),
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  "Email",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  "${_authController.MUser.value!.email}",
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
+              
             ]),
       ),
     );
